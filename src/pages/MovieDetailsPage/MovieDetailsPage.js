@@ -11,7 +11,7 @@ const Reviews = lazy(() => import('./Reviews/Reviews' /*webpackChunkName: "revie
 export default function MovieDetailsPage(){
     const [movies, setMovies] = useState()
     const movieId = useParams()
-    const location = useLocation()
+    // const location = useLocation()
 
     useEffect(() => {
         api.fetchMoviesDetails(movieId).then(response => setMovies(response))
