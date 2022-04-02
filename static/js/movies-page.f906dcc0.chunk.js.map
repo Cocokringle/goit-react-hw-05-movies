@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/movies-page.f906dcc0.chunk.js","mappings":"gMAAe,SAASA,IACpB,OACI","sources":["pages/MoviesPage/MoviesPage.js"],"sourcesContent":["export default function MoviesPage(){\n    return (\n        <p>страница поиска фильмов по ключевому слову</p>\n    )\n}"],"names":["MoviesPage"],"sourceRoot":""}
