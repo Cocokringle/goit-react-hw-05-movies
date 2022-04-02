@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { useParams, useLocation, Link, Route, Routes} from 'react-router-dom';
+import { useParams, Link, Route, Routes} from 'react-router-dom';
 import api from "services/movies-api"
 import PageHeading from "components/PageHeading/PageHeading"
 import s from "./MovieDetailsPage.module.css"
