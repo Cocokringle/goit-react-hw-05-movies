@@ -56,7 +56,7 @@ export default function MovieDetailsPage(){
         
         <Suspense fallback={<h1>тут должен быть лоадер</h1>}>
             <Routes>
-                <Route path='/movies/:moviesId' element={<Cast/>} />
+                <Route path='/movies/:moviesId' element={ movies && <Cast movies={movies}/>} />
                 <Route path='/reviews' element={<Reviews/>} movies={movies}/>
             </Routes>
         </Suspense>
