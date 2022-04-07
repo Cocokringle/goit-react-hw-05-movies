@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation} from 'react-router-dom';
 import api from "services/movies-api"
 import PageHeading from 'components/PageHeading/PageHeading';
 
 export default function HomePage(){
     const [trendingMovies, setTrendingMovies] = useState([])
+    const location = useLocation()
 
 
     useEffect(() => {
@@ -17,7 +18,7 @@ export default function HomePage(){
         {trendingMovies && (
             <ul>
                 {trendingMovies.map(movie => (<li key={movie.id}>
-                    <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+                    <Link to={`/movies/${movie.id}`} state={{ from: location, label: 'Go to Home' }}>{movie.title}</Link>
                     </li>))}
                 
             </ul>

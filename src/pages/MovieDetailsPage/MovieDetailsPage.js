@@ -1,27 +1,39 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
-import { useParams, Link, Route, Routes} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, Link,  Outlet, useLocation, useNavigate} from 'react-router-dom';
 import api from "services/movies-api"
 import PageHeading from "components/PageHeading/PageHeading"
 import s from "./MovieDetailsPage.module.css"
+import Button from 'components/Button/Button';
+import Loader from 'components/Loader/Loader';
 
 
-const Cast = lazy(() => import('./Cast/Cast' /*webpackChunkName: "cast" */))
-const Reviews = lazy(() => import('./Reviews/Reviews' /*webpackChunkName: "reviews" */))
+
 
 export default function MovieDetailsPage(){
     const [movies, setMovies] = useState()
-    const movieId = useParams()
-    // const location = useLocation()
+    const moviesId = useParams()
+    const location = useLocation()
+    const navigate = useNavigate()
 
     useEffect(() => {
-        api.fetchMoviesDetails(movieId).then(response => setMovies(response))
-    }, [movieId])
+        api.fetchMoviesDetails(moviesId).then(response => setMovies(response))
+    }, [moviesId])
+
+    const GoBack = () => {
+      navigate(
+        location.state?.from?.pathname
+          ? `${location.state?.from?.pathname}${location.state?.from?.search}`
+          : '/',
+      );
+    };
 
     return (
         <>
-        {movies && (
+        {!movies && <Loader timeout={3000}/>}
+        {movies &&(
         <>
         <PageHeading text={movies.title}/>
+        <Button type={'button'} children={location?.state?.label ?? 'Go Back'} onClick={GoBack}/>
         <div className={s.box}>
         <img src={`https://image.tmdb.org/t/p/w342${movies.poster_path}`} alt={movies.title} />
         <div className={s.description}>
@@ -38,33 +50,37 @@ export default function MovieDetailsPage(){
             <ul>
               <li>
                 <Link
-                  to={`/movies/${movieId.moviesId}/cast`}
+                  to={`/movies/${moviesId.moviesId}/cast`}
+                  state={{
+                    from: location.state.from,
+                    label: location.state.label,
+                  }}
                 >
                   Cast
                 </Link>
+                
               </li>
 
               <li>
                 <Link
-                  to={`/movies/${movieId.moviesId}/reviews`}
+                  to={`/movies/${moviesId.moviesId}/reviews `}
+                  state={{
+                    from: location.state.from,
+                    label: location.state.label,
+                  }}
                 >
                   Reviews
                 </Link>
               </li>
             </ul>
+            <Outlet/>
           </div>
-        
-        <Suspense fallback={<h1>тут должен быть лоадер</h1>}>
-            <Routes>
-                <Route path='/movies/:moviesId' element={ movies && <Cast movies={movies}/>} />
-                <Route path='/reviews' element={<Reviews/>} movies={movies}/>
-            </Routes>
-        </Suspense>
         
 
         </>
         )}
- 
+  
+        
         </>
 
     )
