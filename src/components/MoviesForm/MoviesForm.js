@@ -7,6 +7,9 @@ export default function MoviesForm({forSearch, search}) {
     return (
         <form onSubmit={e => {
             e.preventDefault();
+            if(!input){
+                return;
+            }
             forSearch(input);
           }}>
             <input type="text"
