@@ -52,8 +52,7 @@ export default function MovieDetailsPage(){
                 <Link
                   to={`/movies/${moviesId.moviesId}/cast`}
                   state={{
-                    from: location.state.from,
-                    label: location.state.label,
+                    from: location
                   }}
                 >
                   Cast
@@ -65,8 +64,7 @@ export default function MovieDetailsPage(){
                 <Link
                   to={`/movies/${moviesId.moviesId}/reviews `}
                   state={{
-                    from: location.state.from,
-                    label: location.state.label,
+                    from: location
                   }}
                 >
                   Reviews
